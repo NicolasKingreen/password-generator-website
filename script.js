@@ -1,21 +1,46 @@
 // inputs
-var passwordLengthInput = document.getElementById("password-length-input");
+const passwordLengthInput = document.getElementById("password-length-input");
+const passwordsAmountInput = document.getElementById("passwords-amount-input");
 
-var withSymbolsCheckbox = document.getElementById("symbols-checkbox");
-var withNumbersCheckbox = document.getElementById("numbers-checkbox");
-
-const generatedPasswordInput = document.getElementById("generated-password-input");
+// checkboxes
+const withSymbolsCheckbox = document.getElementById("symbols-checkbox");
+const withNumbersCheckbox = document.getElementById("numbers-checkbox");
+const noConfusionCheckbox = document.getElementById("no-confusion-checkbox");
 
 // buttons
 const generateButton = document.getElementById("generate-button");
-const copyButton = document.getElementById("copy-button");
+
+// output
+const generatedPasswordsArea = document.getElementById("generated-passwords-area");
 
 
-function generatePassword(length, withSymbols, withNumbers) {
-    var lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+
+// const generatedPasswordInput = document.getElementById("generated-password-input");
+
+//const copyButton = document.getElementById("copy-button");
+
+
+function generatePassword(length, withSymbols, withNumbers, noConfusion) {
+    var lowercaseLetters = "abcdefghijkmnopqrstuvwxyz";
+    if (noConfusion)
+        lowercaseLetters.replace('l', '');
+
     var uppercaseLetters = lowercaseLetters.toUpperCase();
-    var symbols = "!@#$%^&*()"
+    if (noConfusion) {
+        uppercaseLetters.replace('I', '');
+        uppercaseLetters.replace('O', '');
+        uppercaseLetters.replace('Q', '');
+    }
+
+    var symbols = "!#%+:=?@";
+    if (!noConfusion)
+        symbols += "\"$&'()*,-./;<>[]^_{|}~";
+
     var numbers = "1234567890";
+    if (noConfusion) {
+        numbers.replace('1', '');
+        numbers.replace('0', '');
+    }
 
     var charset = lowercaseLetters + uppercaseLetters;
     if (withSymbols)
@@ -30,7 +55,6 @@ function generatePassword(length, withSymbols, withNumbers) {
     }
 
     return password;
-
 }
 
 function showSnackBar() {
@@ -45,32 +69,43 @@ function onGenerate() {
     var passwordLength = passwordLengthInput.value;
     var withSymbols = withSymbolsCheckbox.checked;
     var withNumbers = withNumbersCheckbox.checked;
+    var noConfusion = noConfusionCheckbox.checked;
+    var passwordsAmount = passwordsAmountInput.value;
 
-    if (passwordLength < 8)
+    if (passwordLength > 50 || passwordLength < 8)
         return;
 
-    var password = generatePassword(passwordLength, withSymbols, withNumbers);
-    generatedPasswordInput.value = password;
-    copyButton.children[1].children[0].name = "copy-outline";
+    if (passwordsAmount > 10 || passwordsAmount < 1)
+        return;
+
+    var passwords = [];
+    for (let i = 0; i < passwordsAmount; i++) 
+    {
+        var new_password = generatePassword(passwordLength, withSymbols, withNumbers, noConfusion);
+        passwords.push(new_password);
+    }
+
+    generatedPasswordsArea.rows = passwordsAmount;
+    generatedPasswordsArea.value = passwords.join("\n");
 }
 
-function onCopy() {
-    text = generatedPasswordInput.value;
-    if (text == "")
-        return;
-    navigator.clipboard.writeText(text);
-    // document.getElementById("copy-done").name = "checkmark-outline";
-    copyButton.children[1].children[0].name = "checkmark-outline";
-    showSnackBar();
-    setTimeout(() => {
-        copyButton.children[1].children[0].name = "copy-outline";
-    }, 3000);
-}
+// function onCopy() {
+//     text = generatedPasswordInput.value;
+//     if (text == "")
+//         return;
+//     navigator.clipboard.writeText(text);
+//     // document.getElementById("copy-done").name = "checkmark-outline";
+//     copyButton.children[1].children[0].name = "checkmark-outline";
+//     showSnackBar();
+//     setTimeout(() => {
+//         copyButton.children[1].children[0].name = "copy-outline";
+//     }, 3000);
+// }
 
 generateButton.addEventListener('click', ()=> {
     onGenerate();
 });
 
-copyButton.addEventListener('click', ()=> {
-    onCopy();
-});
+// copyButton.addEventListener('click', ()=> {
+//     onCopy();
+// });

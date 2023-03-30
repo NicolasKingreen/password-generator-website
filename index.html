@@ -6,58 +6,24 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-
-        <header>
-
-        </header>
-
         <div class="container">
             <div class="form-box options">
                 <div class="form-box-title">
                     <span class="icon"><ion-icon name="key-outline"></ion-icon></span>
                     Password Generator
                 </div>
-                <!-- <p>Secure password generator</p> -->
-                     <!-- made with Love ♡</p> -->
                 <form action="#">
 
                     <!-- password length -->
                     <div class="input-box">
                         <label>Password length:</label>
-                        <!-- <select id="password-length" title="Select the length of your password">
-                            <optgroup label="Weak">
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                            </optgroup>
-                            <optgroup label="Strong">
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                            </optgroup>
-                        </select> -->
-                        <input type="number" id="password-length-input" min="8" max="50" value="12">
-                        <!-- <div class="range">
-                            <div class="slider-value">
-                                <span>100</span>
-                            </div>
-                            <div class="field">
-                                <div class="value left">0</div>
-                                <input type="range" min="0" max="200" value="100" step="1">
-                                <div class="value right">200</div>
-                            </div>
-                        </div> -->
+                        <input type="number" class="number-input" id="password-length-input" min="8" max="50" value="12">
                     </div>
 
                     <!-- include symbols -->
                     <div class="input-box">
                         <label>
-                            <input id="symbols-checkbox" class="checkbox" type="checkbox">
+                            <input id="symbols-checkbox" class="checkbox" type="checkbox" checked>
                             Include symbols (e.g. !@#$%)
                         </label>
                     </div>
@@ -65,20 +31,36 @@
                     <!-- include numbers -->
                     <div class="input-box">
                         <label>
-                            <input id="numbers-checkbox" class="checkbox" type="checkbox">
+                            <input id="numbers-checkbox" class="checkbox" type="checkbox" checked>
                             Include numbers (e.g. 12345)
                         </label>
                     </div>
 
-                    <button type="submit" class="btn" id="generate-button">Generate</button>
+                    <!-- no confusion -->
+                    <div class="input-box">
+                        <label>
+                            <input id="no-confusion-checkbox" class="checkbox" type="checkbox" checked>
+                            No confusion (e.g. no 1/l & O/0)
+                        </label>
+                    </div>
+
+                    <!-- amount -->
+                    <div class="input-box">
+                        <label>Passwords amount:</label>
+                        <input type="number" class="number-input" id="passwords-amount-input" min="1" max="10" value="5">
+                    </div>
+
+
+                    <button type="button" class="btn" id="generate-button">Generate</button>
 
                     <div class="generated-password">
                         <!-- <label>Your password:</label> -->
-                        <div id="copy-button">
+                        <!-- <div id="copy-button">
                             <span id="snackbar">Successfully Copied</span>
                             <span class="icon"><ion-icon id="copy-done" name="copy-outline"></ion-icon></span>
-                        </div>
-                        <input type="text" id="generated-password-input" placeholder="Your password goes here" readonly>
+                        </div> -->
+                        <!-- <input type="text" id="generated-password-input" placeholder="Your password goes here" readonly> -->
+                        <textarea name="generated-passwords" id="generated-passwords-area" rows="1" spellcheck="false" placeholder="There will be your passwords" readonly></textarea>
                     </div>
 
             </div>
